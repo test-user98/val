@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Anu / Bubbu 💕 | Valentine's Day</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Patrick+Hand&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="bubbles" aria-hidden="true"></div>
+  <div id="app">
+    <!-- ========== SECTION: HOME ========== -->
+    <section id="home" class="screen active">
+      <div class="meme-slot home-meme">
+        <!-- ADD MEME/GIF: drop image in images/home/hero.gif or set src below -->
+        <img src="images/home/meme1.webp" alt="" onerror="this.style.display='none'" />
+      </div>
+      <h1>Hey, Anu.</h1>
+      <p class="tagline">Yes, you Bubbu. The one who stole my sleep, my chain, my chetan and my heart. 💘</p>
+      <p class="sub">Valentine's edition — built with love, sarcasm, and zero chill.</p>
+      <div class="meme-slot home-meme-2">
+        <img src="images/home/fun.jpg" alt="" onerror="this.style.display='none'" />
+      </div>
+      <button type="button" class="cta" data-next="trivia">Let's get started</button>
+      <p class="hint">(You have no choice. Click it.)</p>
+    </section>
+
+    <!-- ========== SECTION: TRIVIA (1 per page) ========== -->
+    <section id="trivia" class="screen">
+      <div class="trivia-progress" id="trivia-progress"></div>
+      <div id="trivia-questions" class="trivia-slides"></div>
+      <div class="trivia-nav">
+        <button type="button" class="cta" id="trivia-next">Next</button>
+      </div>
+    </section>
+
+    <!-- ========== SECTION: WILL YOU BE MY VALENTINE? ========== -->
+    <section id="valentine-ask" class="screen">
+      <div class="meme-slot">
+        <img src="images/valentine/val.gif" alt="" onerror="this.style.display='none'" />
+      </div>
+      <h2>So, Anu... will you be my Valentine?</h2>
+      <div class="choices">
+        <button type="button" class="btn yes-btn" data-outcome="yes">Yes</button>
+        <button type="button" class="btn no-btn" data-outcome="no">No</button>
+      </div>
+    </section>
+
+    <!-- NO FLOW: shame then force yes -->
+    <section id="valentine-no" class="screen">
+      <div class="meme-slot shame">
+        <img src="images/valentine/shame.gif" alt="" onerror="this.parentElement.innerHTML='<p>Add images/valentine/shame.gif for maximum effect</p>'"/>
+      </div>
+      <h2>Bubbu, you should be ashamed. 😤</h2>
+      <p>Okay fine. Pick one:</p>
+      <div class="choices">
+        <button type="button" class="btn yes-btn" data-outcome="yes">Say yes</button>
+        <button type="button" class="btn yes-btn" data-outcome="yes">Definitely say yes</button>
+      </div>
+    </section>
+
+    <!-- YES: celebration + birthday -->
+    <section id="valentine-yes" class="screen">
+      <div class="meme-slot">
+        <img src="images/valentine/yes.gif" alt="" onerror="this.style.display='none'" />
+      </div>
+      <h2>That's more like it, Anu. 💕</h2>
+      <p class="big">Love and celebration on YES!</p>
+      <div id="birthday-block">
+        <h3>P.S. Your birthday's on the 14th! 🎂</h3>
+        <p>Valentine's week — and we're celebrating you, us, and the fact that you said yes. Happy birthday in advance, Bubbu.</p>
+        <div class="meme-slot">
+          <img src="images/birthday/cake.gif" alt="" onerror="this.style.display='none'" />
+        </div>
+      </div>
+      <button type="button" class="cta" data-next="one-more">Continue</button>
+    </section>
+
+    <!-- ========== SECTION: ONE MORE THING ========== -->
+    <section id="one-more" class="screen">
+      <div class="meme-slot">
+        <img src="images/onemore/header.gif" alt="" onerror="this.style.display='none'" />
+      </div>
+      <h2>One more thing, Bubbbu...</h2>
+      <p>Would you like to do that?</p>
+      <div class="choices multi">
+        <button type="button" class="btn opt" data-next="truth-dare">Sure, why not</button>
+        <button type="button" class="btn opt" data-next="truth-dare">Chup chaap haan kar</button>
+        <button type="button" class="btn opt" data-next="truth-dare">Yes (the only right answer)</button>
+        <button type="button" class="btn opt" data-next="truth-dare">I'm in</button>
+      </div>
+    </section>
+
+    <!-- ========== SECTION: TRUTH AND DARE ========== -->
+    <section id="truth-dare" class="screen">
+      <div class="meme-slot">
+        <img src="images/truthdare/meme7.jpg" alt="" onerror="this.style.display='none'" />
+      </div>
+      <h2>Truth & Dare, meri Bubbuuuriiii 🔥</h2>
+      <p class="intro">No backing out. You said yes.</p>
+
+      <div class="td-section">
+        <h3>Truth</h3>
+        <ul id="truth-list"></ul>
+      </div>
+      <div class="meme-slot">
+        <img src="images/truthdare/maja.gif" alt="" onerror="this.style.display='none'" />
+      </div>
+      <div class="td-section">
+        <h3>Dare</h3>
+        <ul id="dare-list"></ul>
+      </div>
+      <div class="meme-slot">
+        <img src="images/truthdare/maza2.gif" alt="" onerror="this.style.display='none'" />
+      </div>
+      <p class="outro">Now go do the dares. I'll be waiting. 😏</p>
+      <button type="button" class="cta" id="submit-answers">Submit my answers</button>
+      <p class="hint">(So they land in his inbox. Yes, really.)</p>
+    </section>
+
+    <!-- ========== THANKS (after submit) ========== -->
+    <section id="thanks" class="screen">
+      <h2>Done, Anu 💕</h2>
+      <p class="big">Your answers are on their way to him.</p>
+      <p>Refresh or come back anytime — you'll start from the beginning.</p>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1/dist/confetti.browser.min.js"></script>
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
