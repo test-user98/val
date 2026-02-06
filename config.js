@@ -17,21 +17,21 @@ window.VALENTINE_CONFIG = {
       q: "How many times a day does your bae want to have sex?",
       options: ["1", "2–3", "5", "7", "10+", "All day every day"],
       meme: "images/trivia/q1.gif",
-      optionImages: { "All day every day": "images/trivia/p5.gif", "2–3": "images/trivia/-1.gif", "5": "images/trivia/p2.gif", "7": "images/trivia/p3.gif", "10+": "images/trivia/p4.gif", "1": "images/trivia/p6.gif" },
+      optionImages: { "All day every day": "images/trivia/p5.gif", "2–3": "images/trivia/p1.gif", "5": "images/trivia/p2.gif", "7": "images/trivia/p3.gif", "10+": "images/trivia/p4.gif", "1": "images/trivia/p6.gif" },
       requiredToProceed: "All day every day"
     },
     {
       q: "What are you thinking of gifting him?",
       options: ["A hug", "Something spicy", "A trip", "His favourite food", "Myself (obviously)", "Surprise me"],
       meme: "images/trivia/q2.gif",
-      optionImages: { "Myself (obviously)": "images/trivia/p7.gif"},
+      optionImages: { "A hug": "images/trivia/p21.gif", "Something spicy": "images/trivia/p22.gif", "A trip": "images/trivia/p23.webp", "His favourite food": "images/trivia/p24.gif", "Myself (obviously)": "images/trivia/p7.gif", "Surprise me": "images/trivia/p25.gif"},
 
     },
     {
       q: "Where will you take your bae with your FTE salary?",
       options: ["Maldives", "Dinner every week", "Road trip", "Staycation", "Wherever he wants", "Nowhere, he pays"],
       meme: "images/trivia/q3.gif",
-      optionImages: { "Nowhere, he pays": "images/trivia/p8.gif"},
+      optionImages: { "Maldives": "images/trivia/p26.gif", "Dinner every week": "images/trivia/p27.webp", "Road trip": "images/trivia/p28.gif", "Staycation": "images/trivia/p29.gif", "Wherever he wants": "images/trivia/p30.gif", "Nowhere, he pays": "images/trivia/p8.gif"},
     },
     {
       q: "Kitna dahej milega?",
