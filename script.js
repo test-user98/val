@@ -301,9 +301,55 @@ document.querySelectorAll("#truth-list .truth-answer").forEach(function (el, i) 
       div.innerHTML =
         '<div class="trivia-q">' + escapeHtml(item.q) + '</div>' +
         '<div class="meme-slot trivia-meme"><img src="' + escapeHtml(memePath) + '" alt="" onerror="this.style.display=\'none\'"/></div>' +
-        '<div class="mcq-options">' + optsHtml + '</div>';
+        '<div class="mcq-options">' + optsHtml + '</div>' +
+        '<div class="trivia-option-reaction meme-slot" style="display:none"><img src="" alt="" onerror="this.style.display=\'none\'"/></div>';
       triviaEl.appendChild(div);
+      var inputs = div.querySelectorAll('input[type="radio"]');
+      for (var r = 0; r < inputs.length; r++) {
+        inputs[r].addEventListener("change", function (idx, it) {
+          return function () {
+            onTriviaOptionChange(idx, it);
+          };
+        }(i, item));
+      }
     });
+  }
+
+  function getSelectedTriviaOption(index) {
+    var radio = document.querySelector('#trivia-questions input[name="trivia_' + index + '"]:checked');
+    return radio ? radio.value : "";
+  }
+
+  function canProceedTrivia(index) {
+    var item = trivia[index];
+    if (!item || !item.requiredToProceed) return true;
+    var sel = getSelectedTriviaOption(index);
+    var allowed = item.requiredToProceed;
+    if (Array.isArray(allowed)) return allowed.indexOf(sel) !== -1;
+    return sel === allowed;
+  }
+
+  function onTriviaOptionChange(index, item) {
+    var slide = document.querySelector('#trivia-questions .trivia-slide[data-index="' + index + '"]');
+    if (!slide) return;
+    var reactionDiv = slide.querySelector(".trivia-option-reaction");
+    var reactionImg = reactionDiv ? reactionDiv.querySelector("img") : null;
+    var sel = getSelectedTriviaOption(index);
+    if (item.optionImages && item.optionImages[sel] && reactionDiv && reactionImg) {
+      reactionImg.src = item.optionImages[sel];
+      reactionImg.style.display = "";
+      reactionDiv.style.display = "block";
+    } else if (reactionDiv) {
+      reactionDiv.style.display = "none";
+    }
+    updateTriviaNextButton();
+  }
+
+  function updateTriviaNextButton() {
+    var nextBtn = document.getElementById("trivia-next");
+    if (!nextBtn) return;
+    var canGo = canProceedTrivia(state.triviaIndex);
+    nextBtn.disabled = !canGo;
   }
 
   function updateTriviaSlide() {
@@ -316,13 +362,25 @@ document.querySelectorAll("#truth-list .truth-answer").forEach(function (el, i) 
     });
     if (nextBtn) {
       nextBtn.textContent = idx >= trivia.length - 1 ? "Done →" : "Next →";
+      updateTriviaNextButton();
     }
     if (progressEl) {
       progressEl.textContent = (idx + 1) + " / " + trivia.length;
     }
+    var item = trivia[idx];
+    if (item && item.optionImages) {
+      onTriviaOptionChange(idx, item);
+    }
   }
 
   function onTriviaNext() {
+    var item = trivia[state.triviaIndex];
+    if (item && item.requiredToProceed) {
+      if (!canProceedTrivia(state.triviaIndex)) {
+        alert("Pick the right option first. 😏");
+        return;
+      }
+    }
     saveProgress();
     if (state.triviaIndex < trivia.length - 1) {
       state.triviaIndex++;

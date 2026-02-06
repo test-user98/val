@@ -287,6 +287,15 @@ h3 { font-size: 1.25rem; }
 
 #trivia .trivia-nav .cta { margin-top: 0; }
 
+#trivia .trivia-nav .cta:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.trivia-option-reaction { margin-top: 12px; }
+.trivia-option-reaction img { max-height: 200px; object-fit: contain; }
+
 /* Truth & Dare */
 .td-section {
   margin: 24px 0;
