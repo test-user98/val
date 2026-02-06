@@ -2,7 +2,7 @@
 
 window.VALENTINE_CONFIG = {
   // Nicknames for her (used in the copy)
-  nicknames: ["Anu", "Bubbu", "my love"],
+  nicknames: ["Babe", "Pookiee", "my love", "my babe"],
 
   // Formspree: create a form at https://formspree.io → get your form ID → paste below.
   // You'll get her answers by email when she clicks "Submit my answers".
@@ -14,11 +14,11 @@ window.VALENTINE_CONFIG = {
   // requiredToProceed (optional): she can only click Next when she picks this option (or one of these). e.g. "All day every day" or ["Option A", "Option B"]
   trivia: [
     {
-      q: "How many times a day does your bae want to have sex?",
-      options: ["1", "2–3", "5", "7", "10+", "All day every day"],
+      q: "How does your partner like to express affection on a perfect day?",
+      options: ["✨ A mix of everything", "🌹 Romantic gestures", "🎁 Thoughtful surprises or gifts", "🤗 Cuddles & closeness"],
       meme: "images/trivia/q1.gif",
-      optionImages: { "All day every day": "images/trivia/p5.gif", "2–3": "images/trivia/p1.gif", "5": "images/trivia/p2.gif", "7": "images/trivia/p3.gif", "10+": "images/trivia/p4.gif", "1": "images/trivia/p6.gif" },
-      requiredToProceed: "All day every day"
+      optionImages: { "✨ A mix of everything": "images/trivia/p5.gif", "🌹 Romantic gestures": "images/trivia/p1.gif", "🎁 Thoughtful surprises or gifts": "images/trivia/p2.gif", "🤗 Cuddles & closeness": "images/trivia/p3.gif"},
+      requiredToProceed: "✨ A mix of everything"
     },
     {
       q: "What are you thinking of gifting him?",
@@ -53,8 +53,8 @@ window.VALENTINE_CONFIG = {
 
   dare: [
     "Take off all your clothes and send me a snap right now.",
-    "Draw Chetan and whatsapp it to me.",
-    "Send me a pic of Chetan you love the most.",
-    "Send me a pic of me you love and adore the most."
+    "Send your favorite picture or memory of me.",
+    "Send the picture or memory of me that hits you the hardest.",
+    "Share the moment or image that makes you smile because of me.."
   ]
 };
