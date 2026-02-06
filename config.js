@@ -24,20 +24,20 @@ window.VALENTINE_CONFIG = {
       q: "What are you thinking of gifting him?",
       options: ["A hug", "Something spicy", "A trip", "His favourite food", "Myself (obviously)", "Surprise me"],
       meme: "images/trivia/q2.gif",
-      optionImages: { "A hug": "images/trivia/p21.gif", "Something spicy": "images/trivia/p22.gif", "A trip": "images/trivia/p23.webp", "His favourite food": "images/trivia/p24.gif", "Myself (obviously)": "images/trivia/p7.gif", "Surprise me": "images/trivia/p25.gif"},
+      optionImages: { "A hug": "images/trivia/p21.gif", "Something spicy": "images/trivia/p22.gif", "A trip": "images/trivia/p23.webp", "His favourite food": "images/trivia/p24.gif", "Myself (obviously)": "images/trivia/p7.gif", "Surprise me": "images/trivia/p50.webp"},
 
     },
     {
       q: "Where will you take your bae with your FTE salary?",
       options: ["Maldives", "Dinner every week", "Road trip", "Staycation", "Wherever he wants", "Nowhere, he pays"],
       meme: "images/trivia/q3.gif",
-      optionImages: { "Maldives": "images/trivia/p26.gif", "Dinner every week": "images/trivia/p27.webp", "Road trip": "images/trivia/p28.gif", "Staycation": "images/trivia/p29.gif", "Wherever he wants": "images/trivia/p30.gif", "Nowhere, he pays": "images/trivia/p8.gif"},
+      optionImages: { "Maldives": "images/trivia/p26.gif", "Dinner every week": "images/trivia/p27.webp", "Road trip": "images/trivia/p28.gif", "Staycation": "images/trivia/p29.gif", "Wherever he wants": "images/trivia/p51.gif", "Nowhere, he pays": "images/trivia/p8.gif"},
     },
     {
       q: "Kitna dahej milega?",
       options: [ "Priceless (I'm the dahej)", "Bohot zyada", "Jo bhi mile share karenge", "Tum kya do ge?"],
       meme: "images/trivia/q4.gif",
-      optionImages: { "Priceless (I'm the dahej)": "images/trivia/p9.gif", "Jo bhi mile share karenge": "images/trivia/p10.gif", "Tum kya do ge?": "images/trivia/p11.gif"},
+      optionImages: { "Bohot zyada": "images/trivia/p41.gif", "Priceless (I'm the dahej)": "images/trivia/p9.gif", "Jo bhi mile share karenge": "images/trivia/p10.gif", "Tum kya do ge?": "images/trivia/p11.gif"},
       requiredToProceed: "Bohot zyada"
     }
   ],

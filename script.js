@@ -66,10 +66,14 @@
   }
 
   function show(sectionId) {
-    restoreAnswersIntoDom();
-    saveProgress();
-    state.step = sectionId;
-    saveProgress();
+    // Do not persist progress for the final thank-you screen,
+    // so a hard refresh always starts from the beginning.
+    if (sectionId !== "thanks") {
+      restoreAnswersIntoDom();
+      saveProgress();
+      state.step = sectionId;
+      saveProgress();
+    }
 
     document.querySelectorAll(".screen").forEach(function (el) {
       el.classList.remove("active");
@@ -315,6 +319,14 @@ document.querySelectorAll("#truth-list .truth-answer").forEach(function (el, i) 
     });
   }
 
+  function onTriviaPrev() {
+    if (state.triviaIndex > 0) {
+      state.triviaIndex--;
+      saveProgress();
+      updateTriviaSlide();
+    }
+  }
+
   function getSelectedTriviaOption(index) {
     var radio = document.querySelector('#trivia-questions input[name="trivia_' + index + '"]:checked');
     return radio ? radio.value : "";
@@ -388,9 +400,13 @@ document.querySelectorAll("#truth-list .truth-answer").forEach(function (el, i) 
       updateTriviaSlide();
     } else {
       if (typeof confetti === "function") {
-        confetti({ particleCount: 100, spread: 60, origin: { y: 0.6 } });
-        setTimeout(function () { confetti({ particleCount: 60, angle: 60, spread: 50, origin: { x: 0.2 } }); }, 150);
-        setTimeout(function () { confetti({ particleCount: 60, angle: 120, spread: 50, origin: { x: 0.8 } }); }, 300);
+        // Lighter, different-style burst for finishing trivia
+        confetti({
+          particleCount: 60,
+          spread: 40,
+          origin: { y: 0.15 },
+          scalar: 0.7
+        });
       }
       show("valentine-ask");
     }
@@ -424,6 +440,8 @@ document.querySelectorAll("#truth-list .truth-answer").forEach(function (el, i) 
   });
   var triviaNext = document.getElementById("trivia-next");
   if (triviaNext) triviaNext.addEventListener("click", onTriviaNext);
+  var triviaPrev = document.getElementById("trivia-prev");
+  if (triviaPrev) triviaPrev.addEventListener("click", onTriviaPrev);
   document.querySelectorAll("#valentine-ask .btn, #valentine-no .btn").forEach(function (b) {
     b.addEventListener("click", onValentineChoice);
   });
