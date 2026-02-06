@@ -18,7 +18,10 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
-  background-image: radial-gradient(ellipse at top, #2d1520 0%, #1a0a0f 60%);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% 80%, rgba(255, 182, 193, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(255, 105, 180, 0.06) 0%, transparent 45%),
+    radial-gradient(ellipse at top, #2d1520 0%, #1a0a0f 60%);
   overflow-x: hidden;
 }
 
@@ -66,6 +69,22 @@ body {
 
 @keyframes pop {
   to { transform: scale(2); opacity: 0; }
+}
+
+.thanks-meme {
+  margin: 20px 0 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.thanks-meme img {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 12px;
 }
 
 #app {
@@ -309,6 +328,17 @@ h3 { font-size: 1.25rem; }
 }
 
 .truth-answer::placeholder, .dare-answer::placeholder { color: var(--muted); }
+
+.dare-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+#truth-section #truth-list { margin-bottom: 20px; }
+#dare-section #dare-list { margin-bottom: 20px; }
 
 .outro { margin-top: 24px; font-style: italic; color: var(--muted); }
 

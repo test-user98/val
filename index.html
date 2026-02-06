@@ -87,37 +87,49 @@
       <h2>One more thing, Bubbbu...</h2>
       <p>Would you like to do that?</p>
       <div class="choices multi">
-        <button type="button" class="btn opt" data-next="truth-dare">Sure, why not</button>
-        <button type="button" class="btn opt" data-next="truth-dare">Chup chaap haan kar</button>
-        <button type="button" class="btn opt" data-next="truth-dare">Yes (the only right answer)</button>
-        <button type="button" class="btn opt" data-next="truth-dare">I'm in</button>
+        <button type="button" class="btn opt" data-next="truth-or-dare">Sure, why not</button>
+        <button type="button" class="btn opt" data-next="truth-or-dare">Chup chaap haan kar</button>
+        <button type="button" class="btn opt" data-next="truth-or-dare">Yes (the only right answer)</button>
+        <button type="button" class="btn opt" data-next="truth-or-dare">I'm in</button>
       </div>
     </section>
 
-    <!-- ========== SECTION: TRUTH AND DARE ========== -->
-    <section id="truth-dare" class="screen">
+    <!-- ========== SECTION: TRUTH OR DARE (choice) ========== -->
+    <section id="truth-or-dare" class="screen">
       <div class="meme-slot">
         <img src="images/truthdare/meme7.jpg" alt="" onerror="this.style.display='none'" />
       </div>
       <h2>Truth & Dare, meri Bubbuuuriiii 🔥</h2>
-      <p class="intro">No backing out. You said yes.</p>
-
-      <div class="td-section">
-        <h3>Truth</h3>
-        <ul id="truth-list"></ul>
+      <p class="intro">No backing out. You said yes. Pick one first:</p>
+      <div class="choices">
+        <button type="button" class="btn truth-dare-choice" data-order="truth-first">Truth first</button>
+        <button type="button" class="btn truth-dare-choice" data-order="dare-first">Dare first</button>
       </div>
+    </section>
+
+    <!-- ========== SECTION: TRUTH ONLY ========== -->
+    <section id="truth-section" class="screen">
       <div class="meme-slot">
         <img src="images/truthdare/maja.gif" alt="" onerror="this.style.display='none'" />
       </div>
-      <div class="td-section">
-        <h3>Dare</h3>
-        <ul id="dare-list"></ul>
-      </div>
+      <h2>Truth 💬</h2>
+      <p class="intro">Answer all. Required.</p>
+      <ul id="truth-list"></ul>
+      <button type="button" class="cta" id="truth-continue-btn">Continue to Dare →</button>
+    </section>
+
+    <!-- ========== SECTION: DARE ONLY ========== -->
+    <section id="dare-section" class="screen">
       <div class="meme-slot">
         <img src="images/truthdare/maza2.gif" alt="" onerror="this.style.display='none'" />
       </div>
-      <p class="outro">Now go do the dares. I'll be waiting. 😏</p>
-      <button type="button" class="cta" id="submit-answers">Submit my answers</button>
+      <h2>Dare 😏</h2>
+      <p class="intro">Do the dare and write something for each. Required.</p>
+      <ul id="dare-list"></ul>
+      <div class="dare-buttons">
+        <button type="button" class="cta" id="dare-continue-btn">Continue to Truth →</button>
+        <button type="button" class="cta" id="submit-answers">Submit my answers</button>
+      </div>
       <p class="hint">(So they land in his inbox. Yes, really.)</p>
     </section>
 
@@ -125,6 +137,9 @@
     <section id="thanks" class="screen">
       <h2>Done, Anu 💕</h2>
       <p class="big">Your answers are on their way to him.</p>
+      <div class="thanks-meme">
+        <img src="meme8.jpg" alt="" />
+      </div>
       <p>Refresh or come back anytime — you'll start from the beginning.</p>
     </section>
   </div>

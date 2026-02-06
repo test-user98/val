@@ -9,6 +9,7 @@
   var state = {
     step: "home",
     triviaIndex: 0,
+    truthOrDareOrder: "truth-first",
     answers: { trivia: [], valentine: null, truth: [], dare: [] }
   };
 
@@ -24,6 +25,7 @@
       state.step = p.step || "home";
       state.answers = p.answers || state.answers;
       state.triviaIndex = p.triviaIndex != null ? p.triviaIndex : 0;
+      state.truthOrDareOrder = p.truthOrDareOrder || "truth-first";
       if (!state.answers.truth) state.answers.truth = [];
       if (!state.answers.dare) state.answers.dare = [];
     } catch (e) {}
@@ -35,6 +37,7 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
         step: state.step,
         triviaIndex: state.triviaIndex,
+        truthOrDareOrder: state.truthOrDareOrder,
         answers: state.answers,
         submitted: false
       }));
@@ -76,6 +79,8 @@
 
     restoreAnswersIntoDom();
     if (sectionId === "trivia") updateTriviaSlide();
+    if (sectionId === "truth-section") updateTruthSectionButton();
+    if (sectionId === "dare-section") updateDareSectionButtons();
   }
 
   function restoreAnswersIntoDom() {
@@ -91,16 +96,31 @@
     }
     // Truth
     if (a.truth) {
-      document.querySelectorAll("#truth-list .truth-answer").forEach(function (el, i) {
+document.querySelectorAll("#truth-list .truth-answer").forEach(function (el, i) {
         if (a.truth[i] !== undefined) el.value = a.truth[i];
       });
     }
-    // Dare
     if (a.dare) {
       document.querySelectorAll("#dare-list .dare-answer").forEach(function (el, i) {
         if (a.dare[i] !== undefined) el.value = a.dare[i];
       });
     }
+  }
+
+  function validateTruth() {
+    var list = document.querySelectorAll("#truth-list .truth-answer");
+    for (var i = 0; i < list.length; i++) {
+      if (!list[i].value.trim()) return false;
+    }
+    return true;
+  }
+
+  function validateDare() {
+    var list = document.querySelectorAll("#dare-list .dare-answer");
+    for (var i = 0; i < list.length; i++) {
+      if (!list[i].value.trim()) return false;
+    }
+    return true;
   }
 
   function setAnswer(key, value) {
@@ -123,6 +143,56 @@
   function onOptClick(e) {
     var next = e.target.getAttribute("data-next");
     if (next) show(next);
+  }
+
+  function onTruthDareChoice(e) {
+    var order = e.target.getAttribute("data-order");
+    state.truthOrDareOrder = order;
+    saveProgress();
+    if (order === "truth-first") show("truth-section");
+    else show("dare-section");
+  }
+
+  function updateTruthSectionButton() {
+    var btn = document.getElementById("truth-continue-btn");
+    if (!btn) return;
+    btn.textContent = state.truthOrDareOrder === "truth-first" ? "Continue to Dare →" : "Submit my answers";
+  }
+
+  function updateDareSectionButtons() {
+    var contBtn = document.getElementById("dare-continue-btn");
+    var subBtn = document.getElementById("submit-answers");
+    if (state.truthOrDareOrder === "truth-first") {
+      if (contBtn) contBtn.style.display = "none";
+      if (subBtn) subBtn.style.display = "";
+    } else {
+      if (contBtn) contBtn.style.display = "";
+      if (subBtn) subBtn.style.display = "none";
+    }
+  }
+
+  function onTruthContinue() {
+    state.answers = getAnswersFromDom();
+    if (!validateTruth()) {
+      alert("Please answer all Truth questions before continuing.");
+      return;
+    }
+    saveProgress();
+    if (state.truthOrDareOrder === "truth-first") {
+      show("dare-section");
+    } else {
+      onSubmitClick();
+    }
+  }
+
+  function onDareContinue() {
+    state.answers = getAnswersFromDom();
+    if (!validateDare()) {
+      alert("Please fill in something for every Dare before continuing.");
+      return;
+    }
+    saveProgress();
+    show("truth-section");
   }
 
   function buildEmailBody() {
@@ -163,6 +233,14 @@
 
   function onSubmitClick() {
     state.answers = getAnswersFromDom();
+    if (!validateTruth()) {
+      alert("Please answer all Truth questions before submitting.");
+      return;
+    }
+    if (!validateDare()) {
+      alert("Please fill in something for every Dare before submitting.");
+      return;
+    }
     saveProgress();
 
     if (!formspreeId || formspreeId === "YOUR_FORM_ID") {
@@ -251,6 +329,11 @@
       saveProgress();
       updateTriviaSlide();
     } else {
+      if (typeof confetti === "function") {
+        confetti({ particleCount: 100, spread: 60, origin: { y: 0.6 } });
+        setTimeout(function () { confetti({ particleCount: 60, angle: 60, spread: 50, origin: { x: 0.2 } }); }, 150);
+        setTimeout(function () { confetti({ particleCount: 60, angle: 120, spread: 50, origin: { x: 0.8 } }); }, 300);
+      }
       show("valentine-ask");
     }
   }
@@ -261,7 +344,7 @@
     truth.forEach(function (t, i) {
       var li = document.createElement("li");
       li.className = "truth-item";
-      li.innerHTML = '<div class="td-q">' + escapeHtml(t) + '</div><textarea class="truth-answer" rows="3" placeholder="Your answer..."></textarea>';
+      li.innerHTML = '<div class="td-q">' + escapeHtml(t) + '</div><textarea class="truth-answer" rows="3" placeholder="Your answer (required)" required></textarea>';
       truthList.appendChild(li);
     });
   }
@@ -272,7 +355,7 @@
     dare.forEach(function (d, i) {
       var li = document.createElement("li");
       li.className = "dare-item";
-      li.innerHTML = '<div class="td-q">' + escapeHtml(d) + '</div><textarea class="dare-answer" rows="2" placeholder="Done? Link? Note? (optional)"></textarea>';
+      li.innerHTML = '<div class="td-q">' + escapeHtml(d) + '</div><textarea class="dare-answer" rows="2" placeholder="Your answer (required)" required></textarea>';
       dareList.appendChild(li);
     });
   }
@@ -289,6 +372,13 @@
   document.querySelectorAll("#one-more .opt").forEach(function (b) {
     b.addEventListener("click", onOptClick);
   });
+  document.querySelectorAll(".truth-dare-choice").forEach(function (b) {
+    b.addEventListener("click", onTruthDareChoice);
+  });
+  var truthContBtn = document.getElementById("truth-continue-btn");
+  if (truthContBtn) truthContBtn.addEventListener("click", onTruthContinue);
+  var dareContBtn = document.getElementById("dare-continue-btn");
+  if (dareContBtn) dareContBtn.addEventListener("click", onDareContinue);
   var submitBtn = document.getElementById("submit-answers");
   if (submitBtn) submitBtn.addEventListener("click", onSubmitClick);
 
@@ -298,26 +388,29 @@
     return d.innerHTML;
   }
 
-  // Floating love bubbles
+  // Floating love hearts + blossoms
   var bubbleContainer = document.getElementById("bubbles");
   if (bubbleContainer) {
-    var symbols = ["💕", "💗", "💖", "💘", "❤️", "🌸", "💝"];
-    var count = 18;
+    var hearts = ["💕", "💗", "💖", "💘", "❤️", "💝", "🩷"];
+    var blossoms = ["🌸", "🌺", "🌷", "💐", "🌼", "🌻", "🪷"];
+    var symbols = hearts.concat(blossoms);
+    var count = 28;
     for (var b = 0; b < count; b++) {
       var el = document.createElement("div");
-      el.className = "bubble" + (b % 3 === 0 ? " heart" : "");
-      var size = 20 + Math.random() * 28;
+      var isEmoji = b % 2 === 0 || b % 3 === 0;
+      el.className = "bubble" + (isEmoji ? " heart" : "");
+      var size = 18 + Math.random() * 32;
       var left = Math.random() * 100;
-      var duration = 12 + Math.random() * 14;
-      var delay = Math.random() * 8;
+      var duration = 14 + Math.random() * 12;
+      var delay = Math.random() * 10;
       el.style.width = size + "px";
       el.style.height = size + "px";
       el.style.left = left + "%";
       el.style.animationDuration = duration + "s";
       el.style.animationDelay = -delay + "s";
-      if (el.classList.contains("heart")) {
+      if (isEmoji) {
         el.textContent = symbols[b % symbols.length];
-        el.style.fontSize = (size * 0.9) + "px";
+        el.style.fontSize = (size * 0.85) + "px";
       }
       el.addEventListener("click", function () {
         this.classList.add("pop");
